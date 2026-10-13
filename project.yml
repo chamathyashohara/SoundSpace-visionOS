@@ -1,0 +1,49 @@
+# XcodeGen spec for the visionOS app. Run `xcodegen generate` on the Mac.
+name: SoundSpace
+options:
+  bundleIdPrefix: lk.soundspace
+  deploymentTarget:
+    visionOS: "1.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+targets:
+  SoundSpace:
+    type: application
+    platform: visionOS
+    sources: [SoundSpace]
+    info:
+      path: Config/SoundSpace-Info.plist
+      properties:
+        CFBundleDisplayName: SoundSpace
+        UIApplicationSceneManifest:
+          UIApplicationPreferredDefaultSceneSessionRole: UIWindowSceneSessionRoleApplication
+          UIApplicationSupportsMultipleScenes: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: lk.soundspace.app
+        GENERATE_INFOPLIST_FILE: NO
+        INFOPLIST_FILE: Config/SoundSpace-Info.plist
+        TARGETED_DEVICE_FAMILY: "7"
+        CODE_SIGN_STYLE: Automatic
+  SoundSpaceTests:
+    type: bundle.unit-test
+    platform: visionOS
+    sources: [SoundSpaceTests]
+    dependencies:
+      - target: SoundSpace
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: lk.soundspace.tests
+        GENERATE_INFOPLIST_FILE: YES
+schemes:
+  SoundSpace:
+    build:
+      targets:
+        SoundSpace: all
+    test:
+      targets: [SoundSpaceTests]
+      gatherCoverageData: true
