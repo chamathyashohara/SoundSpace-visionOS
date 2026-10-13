@@ -1,0 +1,513 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0A6D322CAFBFA511C079E60A /* rabana.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9C15275B1C3DB5593E50F5E9 /* rabana.wav */; };
+		0B4B0721C4A539011899E319 /* Rhythm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834168C64A660A99405E344F /* Rhythm.swift */; };
+		452BE10118865F46EA9FCCE2 /* chime_1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 06EB04D3426E9CDA642C586A /* chime_1.wav */; };
+		4869ABD2C74EFE2BB3333B2E /* Instrument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044994D6E13F9B7DA4E32287 /* Instrument.swift */; };
+		5413AC41B12EC911580FFF00 /* chime_3.wav in Resources */ = {isa = PBXBuildFile; fileRef = AF7B8E2AC7D2361F8A51A04F /* chime_3.wav */; };
+		67DE3D77645C9EDD9C8DAFDC /* StudioImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE3158A09BD195968BA928F /* StudioImmersiveView.swift */; };
+		92F7A692E981C7ED44B04581 /* getabera.wav in Resources */ = {isa = PBXBuildFile; fileRef = D90E10D9C2B145951B9C3BBA /* getabera.wav */; };
+		A49D90492BA0B4466BEFE636 /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B17CC2A4C6710B17ED2F933 /* Layout.swift */; };
+		AE0732B71E277BED49407C6E /* InstrumentComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457D93E568B95DBEBF4A25ED /* InstrumentComponent.swift */; };
+		B249AC1F570A8438D719E7AF /* thammattama_low.wav in Resources */ = {isa = PBXBuildFile; fileRef = 190764395D5BDC36C96598D1 /* thammattama_low.wav */; };
+		C02FAF8847A387C9EE688713 /* chime_2.wav in Resources */ = {isa = PBXBuildFile; fileRef = B6648AD0281CA35EE343885B /* chime_2.wav */; };
+		C078E4E4CAA61E3C2FA768E5 /* ControlPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AADE40A71FA1471068E0A8 /* ControlPanelView.swift */; };
+		C4A16A2B73CBB2660C442379 /* RhythmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4D5F09407744B97F20998C /* RhythmTests.swift */; };
+		C50BDECDDE3643F6C0CD6504 /* SoundBank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CCBD7E6D9BA159B852797E /* SoundBank.swift */; };
+		C57588CDBBBF740D21735DB8 /* StudioModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58798BD3346E0AEEBAB4220D /* StudioModel.swift */; };
+		E246F3CCE36FCD8092940835 /* thammattama_high.wav in Resources */ = {isa = PBXBuildFile; fileRef = A844D06F0140D8EAA3189614 /* thammattama_high.wav */; };
+		E3C81117E55012F8D96012A4 /* SoundSpaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6445F1F8F92B4293A73A7582 /* SoundSpaceApp.swift */; };
+		EFFF496981A80C060605D6B1 /* InstrumentFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAD849327C1E61E62ED7F8 /* InstrumentFactory.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		793FD8329ECC28BDB5E3C90C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EEF9C7713396CF2E36BA6DD2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 16836CD39F91827033FAB405;
+			remoteInfo = SoundSpace;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		044994D6E13F9B7DA4E32287 /* Instrument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instrument.swift; sourceTree = "<group>"; };
+		06EB04D3426E9CDA642C586A /* chime_1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = chime_1.wav; sourceTree = "<group>"; };
+		0A9FB40C9487C70433CBA60D /* SoundSpace.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SoundSpace.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		190764395D5BDC36C96598D1 /* thammattama_low.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = thammattama_low.wav; sourceTree = "<group>"; };
+		20CCBD7E6D9BA159B852797E /* SoundBank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundBank.swift; sourceTree = "<group>"; };
+		457D93E568B95DBEBF4A25ED /* InstrumentComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentComponent.swift; sourceTree = "<group>"; };
+		4B17CC2A4C6710B17ED2F933 /* Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
+		4D4D5F09407744B97F20998C /* RhythmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RhythmTests.swift; sourceTree = "<group>"; };
+		58798BD3346E0AEEBAB4220D /* StudioModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioModel.swift; sourceTree = "<group>"; };
+		6445F1F8F92B4293A73A7582 /* SoundSpaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSpaceApp.swift; sourceTree = "<group>"; };
+		834168C64A660A99405E344F /* Rhythm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rhythm.swift; sourceTree = "<group>"; };
+		897785656824CA026B9F7406 /* SoundSpaceTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SoundSpaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8DE3158A09BD195968BA928F /* StudioImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioImmersiveView.swift; sourceTree = "<group>"; };
+		9ADAD849327C1E61E62ED7F8 /* InstrumentFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentFactory.swift; sourceTree = "<group>"; };
+		9C15275B1C3DB5593E50F5E9 /* rabana.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = rabana.wav; sourceTree = "<group>"; };
+		A6AADE40A71FA1471068E0A8 /* ControlPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPanelView.swift; sourceTree = "<group>"; };
+		A844D06F0140D8EAA3189614 /* thammattama_high.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = thammattama_high.wav; sourceTree = "<group>"; };
+		AF7B8E2AC7D2361F8A51A04F /* chime_3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = chime_3.wav; sourceTree = "<group>"; };
+		B6648AD0281CA35EE343885B /* chime_2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = chime_2.wav; sourceTree = "<group>"; };
+		D90E10D9C2B145951B9C3BBA /* getabera.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = getabera.wav; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		200EF48EDBACE1B3A3778CA4 /* SoundSpaceTests */ = {
+			isa = PBXGroup;
+			children = (
+				4D4D5F09407744B97F20998C /* RhythmTests.swift */,
+			);
+			path = SoundSpaceTests;
+			sourceTree = "<group>";
+		};
+		3139A6BAAC57808FEBFB407E /* SoundSpace */ = {
+			isa = PBXGroup;
+			children = (
+				FC3F01FB298547D95C2048C9 /* App */,
+				604355254FBDA6C52B3819E3 /* Core */,
+				FEC114283DF003A45DD2CCC3 /* Resources */,
+				9FB3A18183D97AB47317F86F /* Studio */,
+				455FF13D89093F8DFB703396 /* Views */,
+			);
+			path = SoundSpace;
+			sourceTree = "<group>";
+		};
+		455FF13D89093F8DFB703396 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A6AADE40A71FA1471068E0A8 /* ControlPanelView.swift */,
+				8DE3158A09BD195968BA928F /* StudioImmersiveView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		604355254FBDA6C52B3819E3 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				044994D6E13F9B7DA4E32287 /* Instrument.swift */,
+				4B17CC2A4C6710B17ED2F933 /* Layout.swift */,
+				834168C64A660A99405E344F /* Rhythm.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		6051FC094BB70C5E9ACB47BD = {
+			isa = PBXGroup;
+			children = (
+				3139A6BAAC57808FEBFB407E /* SoundSpace */,
+				200EF48EDBACE1B3A3778CA4 /* SoundSpaceTests */,
+				E20DE735A7FD971309F215C0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9FB3A18183D97AB47317F86F /* Studio */ = {
+			isa = PBXGroup;
+			children = (
+				457D93E568B95DBEBF4A25ED /* InstrumentComponent.swift */,
+				9ADAD849327C1E61E62ED7F8 /* InstrumentFactory.swift */,
+				20CCBD7E6D9BA159B852797E /* SoundBank.swift */,
+				58798BD3346E0AEEBAB4220D /* StudioModel.swift */,
+			);
+			path = Studio;
+			sourceTree = "<group>";
+		};
+		DE67FA327C5674C2A146B3AE /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				06EB04D3426E9CDA642C586A /* chime_1.wav */,
+				B6648AD0281CA35EE343885B /* chime_2.wav */,
+				AF7B8E2AC7D2361F8A51A04F /* chime_3.wav */,
+				D90E10D9C2B145951B9C3BBA /* getabera.wav */,
+				9C15275B1C3DB5593E50F5E9 /* rabana.wav */,
+				A844D06F0140D8EAA3189614 /* thammattama_high.wav */,
+				190764395D5BDC36C96598D1 /* thammattama_low.wav */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
+		E20DE735A7FD971309F215C0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0A9FB40C9487C70433CBA60D /* SoundSpace.app */,
+				897785656824CA026B9F7406 /* SoundSpaceTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FC3F01FB298547D95C2048C9 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				6445F1F8F92B4293A73A7582 /* SoundSpaceApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		FEC114283DF003A45DD2CCC3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DE67FA327C5674C2A146B3AE /* Sounds */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		16836CD39F91827033FAB405 /* SoundSpace */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BB3FEE3B6E8A22FE41BFAD06 /* Build configuration list for PBXNativeTarget "SoundSpace" */;
+			buildPhases = (
+				DED57A4D91D16298A5833485 /* Sources */,
+				481CD8684D54A5E8D499280D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SoundSpace;
+			packageProductDependencies = (
+			);
+			productName = SoundSpace;
+			productReference = 0A9FB40C9487C70433CBA60D /* SoundSpace.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B599BBE82F8BDF1761B18DA3 /* SoundSpaceTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1B58DC673B29BCB35597A34D /* Build configuration list for PBXNativeTarget "SoundSpaceTests" */;
+			buildPhases = (
+				5F8628CE77B94B0EC41C1494 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3FC4C4F5177DAAAE6CDD1DCA /* PBXTargetDependency */,
+			);
+			name = SoundSpaceTests;
+			packageProductDependencies = (
+			);
+			productName = SoundSpaceTests;
+			productReference = 897785656824CA026B9F7406 /* SoundSpaceTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EEF9C7713396CF2E36BA6DD2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					16836CD39F91827033FAB405 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 07EFFB04E43FD003D4425E1B /* Build configuration list for PBXProject "SoundSpace" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 6051FC094BB70C5E9ACB47BD;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = E20DE735A7FD971309F215C0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				16836CD39F91827033FAB405 /* SoundSpace */,
+				B599BBE82F8BDF1761B18DA3 /* SoundSpaceTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		481CD8684D54A5E8D499280D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				452BE10118865F46EA9FCCE2 /* chime_1.wav in Resources */,
+				C02FAF8847A387C9EE688713 /* chime_2.wav in Resources */,
+				5413AC41B12EC911580FFF00 /* chime_3.wav in Resources */,
+				92F7A692E981C7ED44B04581 /* getabera.wav in Resources */,
+				0A6D322CAFBFA511C079E60A /* rabana.wav in Resources */,
+				E246F3CCE36FCD8092940835 /* thammattama_high.wav in Resources */,
+				B249AC1F570A8438D719E7AF /* thammattama_low.wav in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5F8628CE77B94B0EC41C1494 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4A16A2B73CBB2660C442379 /* RhythmTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DED57A4D91D16298A5833485 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C078E4E4CAA61E3C2FA768E5 /* ControlPanelView.swift in Sources */,
+				4869ABD2C74EFE2BB3333B2E /* Instrument.swift in Sources */,
+				AE0732B71E277BED49407C6E /* InstrumentComponent.swift in Sources */,
+				EFFF496981A80C060605D6B1 /* InstrumentFactory.swift in Sources */,
+				A49D90492BA0B4466BEFE636 /* Layout.swift in Sources */,
+				0B4B0721C4A539011899E319 /* Rhythm.swift in Sources */,
+				C50BDECDDE3643F6C0CD6504 /* SoundBank.swift in Sources */,
+				E3C81117E55012F8D96012A4 /* SoundSpaceApp.swift in Sources */,
+				67DE3D77645C9EDD9C8DAFDC /* StudioImmersiveView.swift in Sources */,
+				C57588CDBBBF740D21735DB8 /* StudioModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3FC4C4F5177DAAAE6CDD1DCA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 16836CD39F91827033FAB405 /* SoundSpace */;
+			targetProxy = 793FD8329ECC28BDB5E3C90C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		4F0F0C68C554360F0E36748D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Config/SoundSpace-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = lk.soundspace.app;
+				SDKROOT = xros;
+				TARGETED_DEVICE_FAMILY = 7;
+			};
+			name = Release;
+		};
+		5BAD496D8F97AEE3843F7AA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = xros;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				XROS_DEPLOYMENT_TARGET = 1.0;
+			};
+			name = Debug;
+		};
+		82791AB9415E9AADF09A238B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = lk.soundspace.tests;
+				SDKROOT = xros;
+				TARGETED_DEVICE_FAMILY = 7;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SoundSpace.app/SoundSpace";
+			};
+			name = Release;
+		};
+		881FF118F00416D68BE98EE3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = lk.soundspace.tests;
+				SDKROOT = xros;
+				TARGETED_DEVICE_FAMILY = 7;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SoundSpace.app/SoundSpace";
+			};
+			name = Debug;
+		};
+		D7DD2E4C9D4ACB8A709C294B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = xros;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				XROS_DEPLOYMENT_TARGET = 1.0;
+			};
+			name = Release;
+		};
+		F7603C1A6D6150EB9C677FF0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Config/SoundSpace-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = lk.soundspace.app;
+				SDKROOT = xros;
+				TARGETED_DEVICE_FAMILY = 7;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		07EFFB04E43FD003D4425E1B /* Build configuration list for PBXProject "SoundSpace" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5BAD496D8F97AEE3843F7AA8 /* Debug */,
+				D7DD2E4C9D4ACB8A709C294B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		1B58DC673B29BCB35597A34D /* Build configuration list for PBXNativeTarget "SoundSpaceTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				881FF118F00416D68BE98EE3 /* Debug */,
+				82791AB9415E9AADF09A238B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		BB3FEE3B6E8A22FE41BFAD06 /* Build configuration list for PBXNativeTarget "SoundSpace" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F7603C1A6D6150EB9C677FF0 /* Debug */,
+				4F0F0C68C554360F0E36748D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EEF9C7713396CF2E36BA6DD2 /* Project object */;
+}
