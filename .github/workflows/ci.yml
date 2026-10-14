@@ -33,10 +33,10 @@ jobs:
       - name: Run unit tests
         run: |
           set -o pipefail
-          DEST=$(xcrun simctl list devices available | grep -m1 -o 'Apple Vision Pro[^(]*' | sed 's/ *$//' || true)
-          echo "Using simulator: $DEST"
+          UDID=$(xcrun simctl list devices available | grep 'Apple Vision Pro' | tail -n 1 | grep -o '[0-9A-F]\{8\}-[0-9A-F-]\{27\}' || true)
+          echo "Using simulator: $UDID"
           xcodebuild test -project SoundSpace.xcodeproj -scheme SoundSpace \
-            -destination "platform=visionOS Simulator,name=${DEST:-Apple Vision Pro}" CODE_SIGNING_ALLOWED=NO | tail -n 80
+            -destination "platform=visionOS Simulator,id=$UDID" CODE_SIGNING_ALLOWED=NO | tail -n 80
       - uses: actions/upload-artifact@v4
         if: always()
         with:

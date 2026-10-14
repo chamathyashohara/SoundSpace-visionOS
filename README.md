@@ -1,18 +1,20 @@
 # SoundSpace
 
-**Play Sri Lankan rhythms all around you.** A visionOS prototype for Apple Vision Pro: life-size virtual geta bera, thammattama, rabana and chimes float in your room. Look at a drum and pinch to play it; each instrument sounds from where it sits.
+**Play a drum kit and a chord synth all around you.** A visionOS prototype for Apple Vision Pro: a life-size virtual drum kit and four chord pads float in your room. Pick a chord progression, let the synth play it, and play the drums on top; record the loop and hear it back. The original Sri Lankan percussion (geta bera, thammattama, rabana, chimes) is a second instrument set you can switch to. Each instrument sounds from where it sits.
 
 SE4041 Mobile Application Design & Development — Assignment 02, Part B.
 
 ## Features
+- **Instrument sets**: drum kit + chord synth (default) or Sri Lankan percussion
+- **Chord synth**: four pads, one per bar of a progression; choose the key, a preset (e.g. I V vi IV) or any of the six chords of the key per bar; chord names float above the pads
 - **Control panel** window (glass material, ornament with loop controls): choose instruments, enter/leave the studio, Play/Arrange mode
 - **Immersive studio** (`ImmersiveSpace`, mixed): four instruments built from RealityKit primitives, placed within arm's reach
 - **Look + pinch** to strike (`SpatialTapGesture` on entities, hover highlight), squash animation
 - **Spatial audio**: each playable part has a `SpatialAudioComponent`, so sound comes from the instrument's position
 - **Reposition** instruments: Arrange mode, pinch-and-hold and move your hand (clamped to a comfortable zone)
-- **8-beat loop recorder** (16th-note quantisation, drift-free playback)
-- **Interactive rhythm lesson** ("First groove"): the next drum pulses one beat early; hits are scored by timing
-- Unit tests for the loop recorder, lesson scoring and layout
+- **4-bar loop recorder** (16 beats, 16th-note quantisation, drift-free playback); the synth plays the chords automatically while you record the drums
+- **Interactive rhythm lessons** ("Rock beat" on the drum kit, "First groove" on the Sri Lankan drums): the next drum pulses one beat early; hits are scored by timing
+- Unit tests for chords and progressions, the loop recorder, lesson scoring and layout
 
 ## Requirements
 - Mac with Apple silicon, Xcode 15.2+ (visionOS SDK), **Apple Vision Pro simulator** (Xcode → Settings → Components)
