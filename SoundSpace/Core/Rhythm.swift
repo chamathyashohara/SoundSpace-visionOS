@@ -60,6 +60,11 @@ struct RhythmPattern {
     let beats: Int
     let hits: [PatternHit]
 
+    /// The instruments a learner needs for this pattern (used to switch them on before the lesson starts).
+    var instrumentIDs: Set<String> {
+        Set(hits.map { String($0.key.split(separator: "#").first ?? "") })
+    }
+
     /// A simple 8-beat pattern for the demo. It is written for teaching the interaction and is not a transcription
     /// of a traditional Kandyan rhythm.
     static let firstGroove = RhythmPattern(
@@ -76,6 +81,22 @@ struct RhythmPattern {
             PatternHit(key: "rabana#0", beat: 6),
             PatternHit(key: "rabana#0", beat: 7),
         ])
+}
+
+extension RhythmPattern {
+    /// Two bars of a basic rock beat on the drum kit: kick on 1 and 3, snare on 2 and 4, hi-hat on the off-beats.
+    static let rockBeat: RhythmPattern = {
+        var hits: [PatternHit] = []
+        for beat in 0..<8 {
+            hits.append(PatternHit(key: beat % 2 == 0 ? "drumkit#0" : "drumkit#1", beat: Double(beat)))   // kick / snare
+            hits.append(PatternHit(key: "drumkit#2", beat: Double(beat) + 0.5))                            // hi-hat
+        }
+        return RhythmPattern(id: "rock-beat", title: "Rock beat",
+                             summary: "Kick on 1 and 3, snare on 2 and 4, hi-hat in between. Follow the glowing drum.",
+                             bpm: 80, beats: 8, hits: hits.sorted { $0.beat < $1.beat })
+    }()
+
+    static let all: [RhythmPattern] = [rockBeat, firstGroove]
 }
 
 struct ExpectedHit: Equatable {

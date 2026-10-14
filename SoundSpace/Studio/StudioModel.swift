@@ -10,24 +10,43 @@ final class StudioModel {
     enum LoopState: Equatable { case idle, recording, playing }
     enum LessonState: Equatable { case idle, countIn, running, finished(LessonResult) }
 
+    /// Which set of instruments is in the room. The band kit is the default; the Sri Lankan percussion is the other set.
+    enum Kit: String, CaseIterable {
+        case band = "Drum kit + synth"
+        case traditional = "Sri Lankan percussion"
+        var instruments: [Instrument] { self == .band ? Instrument.band : Instrument.traditional }
+    }
+
+    /// The loop is always 4 bars of 4 beats, one bar per chord of the progression.
+    static let loopBeats = 16
+
     // Control panel state
-    var enabled: [String: Bool] = Dictionary(uniqueKeysWithValues: Instrument.all.map { ($0.id, true) })
+    var enabled: [String: Bool] = Dictionary(uniqueKeysWithValues: Instrument.all.map { instrument in
+        (instrument.id, Instrument.band.contains(instrument))
+    })
+    private(set) var kit: Kit = .band
     var mode: Mode = .play
     var isImmersiveOpen = false
     var bpm: Double = 96
 
+    // Chords
+    private(set) var progression = ChordProgression()
+    var chordsBacking = true               // the synth plays the progression by itself while looping
+    private(set) var currentChordSlot: Int?
+
     // Loop recorder
     private(set) var loopState: LoopState = .idle
     private(set) var currentStep = 0
-    private(set) var recorder = LoopRecorder(beats: 8)
+    private(set) var recorder = LoopRecorder(beats: StudioModel.loopBeats)
 
     // Lesson
     private(set) var lessonState: LessonState = .idle
-    private(set) var lessonPattern = RhythmPattern.firstGroove
+    private(set) var lessonPattern = RhythmPattern.rockBeat
     private(set) var nextCue: String?
 
     @ObservationIgnored private let sounds = SoundBank()
     @ObservationIgnored private var zoneEntities: [String: Entity] = [:]
+    @ObservationIgnored private var chordLabels: [Int: Entity] = [:]
     @ObservationIgnored private var rootEntities: [String: Entity] = [:]
     @ObservationIgnored private var loopTask: Task<Void, Never>?
     @ObservationIgnored private var lessonTask: Task<Void, Never>?
@@ -47,6 +66,51 @@ final class StudioModel {
         for child in root.children where child.components[InstrumentComponent.self] != nil {
             if let component = child.components[InstrumentComponent.self] { zoneEntities[component.key] = child }
         }
+        for child in root.children where child.name.hasPrefix(InstrumentFactory.chordLabelPrefix) {
+            if let slot = Int(child.name.dropFirst(InstrumentFactory.chordLabelPrefix.count)) { chordLabels[slot] = child }
+        }
+        if instrument.chordPads { refreshChordLabels() }
+    }
+
+    // MARK: Kits and chords
+
+    func selectKit(_ newKit: Kit) {
+        kit = newKit
+        for instrument in Instrument.all { enabled[instrument.id] = newKit.instruments.contains(instrument) }
+        applyEnabledFlags()
+    }
+
+    func setKey(_ pitchClass: Int) {
+        progression.keyRoot = ((pitchClass % 12) + 12) % 12
+        refreshChordLabels()
+    }
+
+    func setDegree(_ degree: Int, slot: Int) {
+        guard progression.degrees.indices.contains(slot) else { return }
+        progression.degrees[slot] = min(max(degree, 0), 5)
+        refreshChordLabels()
+    }
+
+    func applyPreset(_ preset: ChordProgression.Preset) {
+        progression = ChordProgression(keyRoot: progression.keyRoot, degrees: preset.degrees)
+        refreshChordLabels()
+    }
+
+    private func refreshChordLabels() {
+        for (slot, label) in chordLabels {
+            InstrumentFactory.updateChordLabel(label, slot: slot, text: progression.chord(at: slot).name)
+        }
+    }
+
+    private func chordSlot(in key: String) -> Int? {
+        let prefix = Instrument.chordSynth.id + "#"
+        guard key.hasPrefix(prefix) else { return nil }
+        return Int(key.dropFirst(prefix.count))
+    }
+
+    private func audio(forKey key: String) -> AudioFileResource? {
+        if let slot = chordSlot(in: key) { return sounds.resource(for: progression.chord(at: slot)) }
+        return sounds.resource(forKey: key)
     }
 
     func applyEnabledFlags() {
@@ -68,7 +132,7 @@ final class StudioModel {
     /// Plays one zone. `record` is false when the loop itself is replaying the hit.
     func strike(key: String, record: Bool) {
         guard let entity = zoneEntities[key] else { return }
-        if let resource = sounds.resource(forKey: key) { entity.playAudio(resource) }
+        if let resource = audio(forKey: key) { entity.playAudio(resource) }
         bounce(entity)
         guard record else { return }
         if loopState == .recording {
@@ -129,46 +193,44 @@ final class StudioModel {
 
     // MARK: Loop recorder
 
-    /// Records exactly 8 beats, then plays the loop back repeatedly.
+    /// Records 4 bars (16 beats), then plays the loop back repeatedly. While it runs, the synth plays one chord per bar
+    /// (if `chordsBacking` is on), so you can play the drum kit in time with the progression.
     func startRecording() {
         stopLoop()
-        recorder.clear()
+        recorder = LoopRecorder(beats: Self.loopBeats)
         loopState = .recording
         loopStart = Date()
-        let clock = self.clock
-        loopTask = Task { [weak self] in
-            let total = clock.seconds(forBeat: 8)
-            while !Task.isCancelled {
-                guard let self else { return }
-                let elapsed = Date().timeIntervalSince(self.loopStart)
-                self.currentStep = min(self.recorder.stepCount - 1, Int(clock.beat(forSeconds: elapsed) * 4))
-                if elapsed >= total { break }
-                try? await Task.sleep(for: .milliseconds(20))
-            }
-            guard !Task.isCancelled, let self else { return }
-            self.beginPlayback()
-        }
+        runLoop(recordingSteps: recorder.stepCount)
     }
 
     func startPlayback() {
         guard !recorder.isEmpty else { return }
         stopLoop()
-        beginPlayback()
+        loopState = .playing
+        runLoop(recordingSteps: 0)
     }
 
-    private func beginPlayback() {
-        loopState = .playing
+    /// One task drives everything on a 16th-note grid. Deadlines are absolute (origin + n steps), so the loop does not drift.
+    private func runLoop(recordingSteps: Int) {
         let stepSeconds = clock.secondsPerBeat / 4
+        let stepsPerBar = 16
         let origin = ContinuousClock.now
         loopTask = Task { [weak self] in
             var tick = 0
             while !Task.isCancelled {
                 guard let self else { return }
+                if self.loopState == .recording && tick >= recordingSteps { self.loopState = .playing }   // recording done: hear it back
                 let step = tick % self.recorder.stepCount
                 self.currentStep = step
-                for hit in self.recorder.hits(atStep: step) { self.strike(key: hit.key, record: false) }
+                if step % stepsPerBar == 0 {
+                    let slot = (step / stepsPerBar) % ChordProgression.slotCount
+                    self.currentChordSlot = slot
+                    if self.chordsBacking { self.strike(key: Instrument.key(Instrument.chordSynth.id, zone: slot), record: false) }
+                }
+                if self.loopState == .playing {
+                    for hit in self.recorder.hits(atStep: step) { self.strike(key: hit.key, record: false) }
+                }
                 tick += 1
-                // Absolute deadlines (not "sleep 0.1 s each time") so the loop does not drift.
                 try? await Task.sleep(until: origin + .seconds(stepSeconds * Double(tick)), clock: .continuous)
             }
         }
@@ -179,6 +241,7 @@ final class StudioModel {
         loopTask = nil
         loopState = .idle
         currentStep = 0
+        currentChordSlot = nil
     }
 
     func clearLoop() {
@@ -188,11 +251,19 @@ final class StudioModel {
 
     // MARK: Rhythm lesson
 
+    func selectLessonPattern(_ pattern: RhythmPattern) {
+        guard lessonState != .countIn, lessonState != .running else { return }
+        lessonPattern = pattern
+        lessonState = .idle
+    }
+
     func startLesson() {
         stopLesson()
         stopLoop()
         mode = .play
         let pattern = lessonPattern
+        // Make sure the instruments this pattern needs are in the room.
+        selectKit(pattern.instrumentIDs.contains(Instrument.drumKit.id) ? .band : .traditional)
         let clock = BeatClock(bpm: pattern.bpm)
         let countIn = 4.0
         let expected = pattern.hits.map { ExpectedHit(key: $0.key, time: clock.seconds(forBeat: countIn + $0.beat)) }

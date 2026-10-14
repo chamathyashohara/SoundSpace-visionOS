@@ -12,6 +12,7 @@ struct ControlPanelView: View {
                 VStack(alignment: .leading, spacing: 24) {
                     header
                     instrumentSection
+                    chordSection
                     studioSection
                     loopSection
                     lessonSection
@@ -25,7 +26,7 @@ struct ControlPanelView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("Play Sri Lankan rhythms all around you").font(.title3).foregroundStyle(.secondary)
+            Text("Play a drum kit and a chord synth all around you").font(.title3).foregroundStyle(.secondary)
         }
     }
 
@@ -35,7 +36,12 @@ struct ControlPanelView: View {
         @Bindable var studio = studio
         return VStack(alignment: .leading, spacing: 12) {
             Text("Instruments").font(.headline)
-            ForEach(Instrument.all) { instrument in
+            Picker("Instrument set", selection: Binding(get: { studio.kit }, set: { studio.selectKit($0) })) {
+                ForEach(StudioModel.Kit.allCases, id: \.self) { Text($0.rawValue).tag($0) }
+            }
+            .pickerStyle(.segmented)
+            .accessibilityIdentifier("kitPicker")
+            ForEach(studio.kit.instruments) { instrument in
                 Toggle(isOn: Binding(get: { studio.enabled[instrument.id] ?? true },
                                      set: { studio.enabled[instrument.id] = $0 })) {
                     VStack(alignment: .leading) {
@@ -45,6 +51,49 @@ struct ControlPanelView: View {
                 }
                 .accessibilityIdentifier("toggle-\(instrument.id)")
             }
+        }
+    }
+
+    // MARK: Chords
+
+    private var chordSection: some View {
+        @Bindable var studio = studio
+        return VStack(alignment: .leading, spacing: 12) {
+            Text("Chord progression").font(.headline)
+            HStack {
+                Picker("Key", selection: Binding(get: { studio.progression.keyRoot }, set: { studio.setKey($0) })) {
+                    ForEach(0..<12, id: \.self) { Text("\(Chord.noteNames[$0]) major").tag($0) }
+                }
+                .pickerStyle(.menu)
+                Menu("Presets", systemImage: "music.note.list") {
+                    ForEach(ChordProgression.presets) { preset in
+                        Button(preset.name) { studio.applyPreset(preset) }
+                    }
+                }
+            }
+            HStack(spacing: 8) {
+                ForEach(0..<ChordProgression.slotCount, id: \.self) { slot in
+                    Menu {
+                        ForEach(0..<ChordProgression.degreeNames.count, id: \.self) { degree in
+                            let option = ChordProgression(keyRoot: studio.progression.keyRoot, degrees: [degree]).chord(at: 0)
+                            Button("\(option.name)  (\(ChordProgression.degreeNames[degree]))") { studio.setDegree(degree, slot: slot) }
+                        }
+                    } label: {
+                        VStack(spacing: 2) {
+                            Text("Bar \(slot + 1)").font(.caption).foregroundStyle(.secondary)
+                            Text(studio.progression.chord(at: slot).name).font(.title2.bold())
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 8)
+                        .background(studio.currentChordSlot == slot ? Color.accentColor.opacity(0.4) : Color.secondary.opacity(0.15),
+                                    in: RoundedRectangle(cornerRadius: 12))
+                    }
+                    .accessibilityIdentifier("chordSlot-\(slot)")
+                }
+            }
+            Toggle("Synth plays the chords while looping", isOn: $studio.chordsBacking)
+            Text("Tap a bar to change its chord. In the studio, pinch the pads to play chords yourself.")
+                .font(.footnote).foregroundStyle(.secondary)
         }
     }
 
@@ -89,7 +138,8 @@ struct ControlPanelView: View {
     private var loopSection: some View {
         @Bindable var studio = studio
         return VStack(alignment: .leading, spacing: 12) {
-            Text("Loop recorder · 8 beats").font(.headline)
+            Text("Loop recorder · 4 bars").font(.headline)
+            Text("The chords play by themselves. Press Record and play the drums on top.").font(.subheadline).foregroundStyle(.secondary)
             Stepper("Tempo \(Int(studio.bpm)) bpm", value: $studio.bpm, in: 60...140, step: 4)
                 .disabled(studio.loopState != .idle)
             StepIndicator(currentStep: studio.currentStep, stepCount: studio.recorder.stepCount,
@@ -115,6 +165,11 @@ struct ControlPanelView: View {
     private var lessonSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Rhythm lesson").font(.headline)
+            Picker("Pattern", selection: Binding(get: { studio.lessonPattern.id },
+                                                  set: { id in if let pattern = RhythmPattern.all.first(where: { $0.id == id }) { studio.selectLessonPattern(pattern) } })) {
+                ForEach(RhythmPattern.all, id: \.id) { Text($0.title).tag($0.id) }
+            }
+            .pickerStyle(.segmented)
             Text(studio.lessonPattern.title).font(.title3.bold())
             Text(studio.lessonPattern.summary).foregroundStyle(.secondary)
             switch studio.lessonState {
@@ -143,7 +198,7 @@ struct ControlPanelView: View {
     }
 }
 
-/// Eight beats of four steps each; lights up as the loop plays.
+/// One block per 16th-note step (four per beat); lights up as the loop plays.
 struct StepIndicator: View {
     let currentStep: Int
     let stepCount: Int

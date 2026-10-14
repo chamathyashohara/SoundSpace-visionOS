@@ -88,7 +88,23 @@ final class LessonScorerTests: XCTestCase {
 
 final class InstrumentTests: XCTestCase {
     func testDefaultLayoutDoesNotOverlap() {
-        XCTAssertTrue(StudioLayout.isSpacedOut(Instrument.all))
+        // The two sets are never in the room together, so each set is checked on its own.
+        XCTAssertTrue(StudioLayout.isSpacedOut(Instrument.traditional))
+        XCTAssertTrue(StudioLayout.isSpacedOut(Instrument.band))
+    }
+
+    func testEveryInstrumentBelongsToExactlyOneSet() {
+        XCTAssertEqual(Set(Instrument.all.map(\.id)).count, Instrument.all.count, "ids must be unique")
+        XCTAssertEqual(Instrument.traditional.count + Instrument.band.count, Instrument.all.count)
+    }
+
+    func testDrumKitAndSynthZones() {
+        XCTAssertEqual(Instrument.drumKit.zoneCount, 5)
+        XCTAssertEqual(Instrument.drumKitZoneNames.count, Instrument.drumKit.zoneCount)
+        XCTAssertEqual(Instrument.chordSynth.zoneCount, ChordProgression.slotCount)
+        XCTAssertTrue(Instrument.chordSynth.chordPads)
+        XCTAssertEqual(Instrument.displayName(forKey: "drumkit#1"), "Snare")
+        XCTAssertEqual(Instrument.displayName(forKey: "chordpads#2"), "Chord Synth")
     }
 
     func testInstrumentsWithinArmsReach() {
@@ -109,5 +125,34 @@ final class InstrumentTests: XCTestCase {
         XCTAssertEqual(Instrument.thammattama.zoneCount, 2)
         XCTAssertEqual(Instrument.chimes.zoneCount, 3)
         XCTAssertEqual(Instrument.displayName(forKey: "getabera#0"), "Geta Bera")
+    }
+}
+
+final class RockBeatTests: XCTestCase {
+    func testRockBeatIsValid() {
+        let pattern = RhythmPattern.rockBeat
+        XCTAssertEqual(pattern.hits.count, 16)          // 8 kick/snare hits + 8 hi-hat hits
+        XCTAssertTrue(pattern.hits.allSatisfy { $0.beat >= 0 && $0.beat < Double(pattern.beats) })
+        XCTAssertEqual(pattern.instrumentIDs, [Instrument.drumKit.id])
+        XCTAssertEqual(pattern.hits.map(\.beat), pattern.hits.map(\.beat).sorted())
+    }
+
+    func testKickOnOneAndThreeSnareOnTwoAndFour() {
+        let hits = RhythmPattern.rockBeat.hits
+        XCTAssertTrue(hits.contains(PatternHit(key: "drumkit#0", beat: 0)))
+        XCTAssertTrue(hits.contains(PatternHit(key: "drumkit#1", beat: 1)))
+        XCTAssertTrue(hits.contains(PatternHit(key: "drumkit#0", beat: 2)))
+        XCTAssertTrue(hits.contains(PatternHit(key: "drumkit#1", beat: 3)))
+    }
+
+    func testEveryPatternUsesKnownZones() {
+        for pattern in RhythmPattern.all {
+            for hit in pattern.hits {
+                let parts = hit.key.split(separator: "#")
+                let instrument = Instrument.named(String(parts[0]))
+                XCTAssertNotNil(instrument, hit.key)
+                XCTAssertLessThan(Int(parts[1]) ?? 99, instrument?.zoneCount ?? 0, hit.key)
+            }
+        }
     }
 }

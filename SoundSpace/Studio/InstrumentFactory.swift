@@ -34,6 +34,18 @@ enum InstrumentFactory {
         return entity
     }
 
+    /// Horizontal position of each chord pad inside the synth, left to right.
+    static let chordPadX: [Float] = [-0.45, -0.15, 0.15, 0.45]
+    static let chordLabelPrefix = "chordlabel#"
+
+    /// Re-writes the chord name floating above a pad (called whenever the progression changes).
+    static func updateChordLabel(_ entity: Entity, slot: Int, text: String) {
+        guard let model = entity as? ModelEntity, slot >= 0, slot < chordPadX.count else { return }
+        let mesh = MeshResource.generateText(text, extrusionDepth: 0.004, font: .systemFont(ofSize: 0.09, weight: .bold))
+        model.model?.mesh = mesh
+        model.position = [chordPadX[slot] - mesh.bounds.extents.x / 2, 0.15, 0.03]
+    }
+
     static func make(_ instrument: Instrument) -> Entity {
         let root = Entity()
         root.name = instrument.id
@@ -59,6 +71,37 @@ enum InstrumentFactory {
                                color: UIColor(red: 0.78, green: 0.62, blue: 0.4, alpha: 1), position: [0, 0, 0],
                                orientation: simd_quatf(angle: .pi / 3, axis: [1, 0, 0])))
             root.addChild(label(instrument.name, height: 0.42))
+        case "drumkit":
+            // Kick lies on its side facing you; snare and tom in front, hi-hat on the left, crash on the right.
+            root.addChild(zone(instrument, index: 0, mesh: .generateCylinder(height: 0.3, radius: 0.22),
+                               color: UIColor(red: 0.5, green: 0.08, blue: 0.1, alpha: 1), position: [0, -0.3, -0.05],
+                               orientation: simd_quatf(angle: .pi / 2, axis: [1, 0, 0])))
+            root.addChild(zone(instrument, index: 1, mesh: .generateCylinder(height: 0.1, radius: 0.15),
+                               color: UIColor(white: 0.85, alpha: 1), metallic: true, position: [-0.22, 0.02, 0.15]))
+            root.addChild(zone(instrument, index: 2, mesh: .generateCylinder(height: 0.02, radius: 0.15),
+                               color: UIColor(red: 0.95, green: 0.78, blue: 0.25, alpha: 1), metallic: true, position: [-0.62, 0.2, 0],
+                               orientation: simd_quatf(angle: .pi / 14, axis: [1, 0, 0])))
+            root.addChild(zone(instrument, index: 3, mesh: .generateCylinder(height: 0.14, radius: 0.13),
+                               color: UIColor(red: 0.12, green: 0.25, blue: 0.5, alpha: 1), position: [0.15, 0.22, -0.08],
+                               orientation: simd_quatf(angle: .pi / 12, axis: [1, 0, 0])))
+            root.addChild(zone(instrument, index: 4, mesh: .generateCylinder(height: 0.015, radius: 0.22),
+                               color: UIColor(red: 0.95, green: 0.78, blue: 0.25, alpha: 1), metallic: true, position: [0.6, 0.5, -0.05],
+                               orientation: simd_quatf(angle: .pi / 12, axis: [1, 0, 0])))
+            root.addChild(label(instrument.name, height: 0.72))
+        case "chordpads":
+            // Four coloured pads tilted towards you, each with its chord name above it.
+            for index in 0..<instrument.zoneCount {
+                let color = UIColor(hue: 0.08 + 0.2 * CGFloat(index), saturation: 0.65, brightness: 0.9, alpha: 1)
+                root.addChild(zone(instrument, index: index, mesh: .generateBox(size: [0.26, 0.18, 0.06], cornerRadius: 0.03),
+                                   color: color, position: [chordPadX[index], 0, 0],
+                                   orientation: simd_quatf(angle: -.pi / 10, axis: [1, 0, 0])))
+                let text = ModelEntity(mesh: .generateText("–", extrusionDepth: 0.004, font: .systemFont(ofSize: 0.09, weight: .bold)),
+                                       materials: [UnlitMaterial(color: .white)])
+                text.name = "\(chordLabelPrefix)\(index)"
+                root.addChild(text)
+                updateChordLabel(text, slot: index, text: "–")
+            }
+            root.addChild(label(instrument.name, height: 0.3))
         default:
             // Chimes: three golden bells of different heights
             let heights: [Float] = [0.1, 0.0, -0.1]
