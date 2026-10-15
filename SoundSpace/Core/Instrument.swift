@@ -6,7 +6,7 @@ struct Instrument: Identifiable, Hashable {
     let id: String
     let name: String
     let subtitle: String
-    /// One sound file per playable zone (e.g. the two drums of the thammattama, or three chime bells).
+    /// One sound file per playable zone (the drum kit has seven; the chord synth has four pads).
     let soundFiles: [String]
     /// Default position in metres, relative to the floor below the user. Negative z is in front of you.
     let home: SIMD3<Float>
@@ -18,15 +18,6 @@ struct Instrument: Identifiable, Hashable {
     /// Key used by the loop recorder and lessons to identify one playable zone.
     static func key(_ instrumentID: String, zone: Int) -> String { "\(instrumentID)#\(zone)" }
 
-    static let getaBera = Instrument(id: "getabera", name: "Geta Bera", subtitle: "Two-headed Kandyan drum",
-                                     soundFiles: ["getabera"], home: [-0.55, 1.0, -0.95])
-    static let thammattama = Instrument(id: "thammattama", name: "Thammattama", subtitle: "Twin drums played with sticks",
-                                        soundFiles: ["thammattama_high", "thammattama_low"], home: [0.0, 0.95, -1.05])
-    static let rabana = Instrument(id: "rabana", name: "Rabana", subtitle: "Large frame drum",
-                                   soundFiles: ["rabana"], home: [0.6, 1.0, -0.9])
-    static let chimes = Instrument(id: "chimes", name: "Chimes", subtitle: "Melodic bells",
-                                   soundFiles: ["chime_1", "chime_2", "chime_3"], home: [0.0, 1.45, -1.2])
-
     /// The drum kit: kick, snare, hi-hat, rack tom, crash, floor tom and ride in one group.
     static let drumKit = Instrument(id: "drumkit", name: "Drum Kit", subtitle: "Kick, snare, hi-hat, toms, crash and ride",
                                     soundFiles: ["kick", "snare", "hihat", "tom", "crash", "floortom", "ride"], home: [0.0, 0.85, -0.9])
@@ -34,16 +25,14 @@ struct Instrument: Identifiable, Hashable {
     static let chordSynth = Instrument(id: "chordpads", name: "Chord Synth", subtitle: "Four pads play your chord progression",
                                        soundFiles: ["", "", "", ""], home: [0.0, 1.5, -1.15], chordPads: true)
 
-    static let traditional: [Instrument] = [getaBera, thammattama, rabana, chimes]
-    static let band: [Instrument] = [drumKit, chordSynth]
-    static let all: [Instrument] = traditional + band
+    static let all: [Instrument] = [drumKit, chordSynth]
 
     /// Names for the drum kit zones, in zone order.
     static let drumKitZoneNames = ["Kick", "Snare", "Hi-hat", "Tom", "Crash", "Floor tom", "Ride"]
 
     static func named(_ id: String) -> Instrument? { all.first { $0.id == id } }
 
-    /// Display name for a loop / lesson key such as "thammattama#1".
+    /// Display name for a loop / lesson key such as "drumkit#1".
     static func displayName(forKey key: String) -> String {
         let id = key.split(separator: "#").first.map(String.init) ?? key
         if id == drumKit.id, let zone = key.split(separator: "#").last.flatMap({ Int($0) }), zone < drumKitZoneNames.count {

@@ -9,7 +9,7 @@ struct BeatClock: Equatable {
 }
 
 struct LoopHit: Hashable {
-    var key: String      // instrument zone key, e.g. "getabera#0"
+    var key: String      // instrument zone key, e.g. "drumkit#0"
     var step: Int        // position on the 16th-note grid
 }
 
@@ -64,23 +64,6 @@ struct RhythmPattern {
     var instrumentIDs: Set<String> {
         Set(hits.map { String($0.key.split(separator: "#").first ?? "") })
     }
-
-    /// A simple 8-beat pattern for the demo. It is written for teaching the interaction and is not a transcription
-    /// of a traditional Kandyan rhythm.
-    static let firstGroove = RhythmPattern(
-        id: "first-groove", title: "First groove",
-        summary: "Follow the glowing drum. Hit it when it pulses.",
-        bpm: 80, beats: 8,
-        hits: [
-            PatternHit(key: "getabera#0", beat: 0),
-            PatternHit(key: "thammattama#0", beat: 1),
-            PatternHit(key: "getabera#0", beat: 2),
-            PatternHit(key: "thammattama#1", beat: 3),
-            PatternHit(key: "getabera#0", beat: 4),
-            PatternHit(key: "thammattama#0", beat: 5),
-            PatternHit(key: "rabana#0", beat: 6),
-            PatternHit(key: "rabana#0", beat: 7),
-        ])
 }
 
 extension RhythmPattern {
@@ -96,7 +79,7 @@ extension RhythmPattern {
                              bpm: 80, beats: 8, hits: hits.sorted { $0.beat < $1.beat })
     }()
 
-    static let all: [RhythmPattern] = [rockBeat, firstGroove]
+    static let all: [RhythmPattern] = [rockBeat]
 }
 
 struct ExpectedHit: Equatable {

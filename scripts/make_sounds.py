@@ -2,8 +2,7 @@
 """Synthesises the instrument sounds used by SoundSpace (no samples, so no licensing questions).
 
 Each drum is a sine wave whose pitch falls quickly (the 'thump' of a struck membrane) plus a short burst of
-noise (the stick attack). Chimes are sums of inharmonic partials with a long decay (metal bars / bells).
-The drum kit is built the same way (kick, snare, hi-hat, rack tom, crash, floor tom, ride) and the chord pads are three-note pads
+noise (the stick attack). The kit is kick, snare, hi-hat, rack tom, crash, floor tom and ride, and the chord pads are three-note pads
 with a few harmonics per note, so every chord of the synth is a small pre-rendered file.
 Run:  python3 scripts/make_sounds.py   (needs numpy)
 """
@@ -27,14 +26,6 @@ def drum(f_start, f_end, seconds, decay, noise_amount, noise_decay=0.02, tone_mi
     body += 0.35 * np.sin(2 * phase) * np.exp(-t * decay * 1.6)  # a little overtone
     attack = rng.normal(0, 1, t.size) * np.exp(-t / noise_decay) * noise_amount
     return body + attack
-
-
-def chime(f0, seconds=1.8):
-    t = t_axis(seconds)
-    partials = [(1.0, 1.0, 2.2), (2.76, 0.5, 3.2), (5.4, 0.25, 5.0), (8.9, 0.1, 8.0)]   # ratio, level, decay
-    sig = sum(level * np.sin(2 * np.pi * f0 * ratio * t) * np.exp(-t * decay) for ratio, level, decay in partials)
-    sig *= np.minimum(1, t / 0.003)                                                       # 3 ms attack, no click
-    return sig
 
 
 def save(name, signal, peak=0.8, sr=SR):
@@ -117,14 +108,6 @@ def chord(pitch_class, quality, seconds=2.8):
 
 
 def make_all():
-    # Existing instruments first and in the same order, so their (seeded) noise is unchanged.
-    save("getabera", drum(150, 62, 0.9, 5.0, 0.35, 0.025))
-    save("thammattama_high", drum(340, 190, 0.5, 9.0, 0.30, 0.015))
-    save("thammattama_low", drum(230, 120, 0.6, 7.5, 0.30, 0.015))
-    save("rabana", drum(200, 105, 0.7, 6.0, 0.45, 0.03, 0.9))
-    save("chime_1", chime(880.0))
-    save("chime_2", chime(1108.73))
-    save("chime_3", chime(1318.51))
     # Drum kit
     save("kick", drum(150, 46, 0.5, 8.0, 0.25, 0.008))
     save("snare", snare())
