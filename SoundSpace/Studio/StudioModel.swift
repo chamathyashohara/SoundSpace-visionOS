@@ -10,21 +10,11 @@ final class StudioModel {
     enum LoopState: Equatable { case idle, recording, playing }
     enum LessonState: Equatable { case idle, countIn, running, finished(LessonResult) }
 
-    /// Which set of instruments is in the room. The band kit is the default; the Sri Lankan percussion is the other set.
-    enum Kit: String, CaseIterable {
-        case band = "Drum kit + synth"
-        case traditional = "Sri Lankan percussion"
-        var instruments: [Instrument] { self == .band ? Instrument.band : Instrument.traditional }
-    }
-
     /// The loop is always 4 bars of 4 beats, one bar per chord of the progression.
     static let loopBeats = 16
 
     // Control panel state
-    var enabled: [String: Bool] = Dictionary(uniqueKeysWithValues: Instrument.all.map { instrument in
-        (instrument.id, Instrument.band.contains(instrument))
-    })
-    private(set) var kit: Kit = .band
+    var enabled: [String: Bool] = Dictionary(uniqueKeysWithValues: Instrument.all.map { ($0.id, true) })
     var mode: Mode = .play
     var isImmersiveOpen = false
     var bpm: Double = 96
@@ -72,13 +62,7 @@ final class StudioModel {
         if instrument.chordPads { refreshChordLabels() }
     }
 
-    // MARK: Kits and chords
-
-    func selectKit(_ newKit: Kit) {
-        kit = newKit
-        for instrument in Instrument.all { enabled[instrument.id] = newKit.instruments.contains(instrument) }
-        applyEnabledFlags()
-    }
+    // MARK: Chords
 
     func setKey(_ pitchClass: Int) {
         progression.keyRoot = ((pitchClass % 12) + 12) % 12
@@ -263,7 +247,8 @@ final class StudioModel {
         mode = .play
         let pattern = lessonPattern
         // Make sure the instruments this pattern needs are in the room.
-        selectKit(pattern.instrumentIDs.contains(Instrument.drumKit.id) ? .band : .traditional)
+        for id in pattern.instrumentIDs { enabled[id] = true }
+        applyEnabledFlags()
         let clock = BeatClock(bpm: pattern.bpm)
         let countIn = 4.0
         let expected = pattern.hits.map { ExpectedHit(key: $0.key, time: clock.seconds(forBeat: countIn + $0.beat)) }

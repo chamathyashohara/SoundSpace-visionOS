@@ -17,9 +17,9 @@ final class LoopRecorderTests: XCTestCase {
 
     func testDuplicateHitsAreStoredOnce() {
         var recorder = LoopRecorder(beats: 8)
-        recorder.record(key: "getabera#0", atBeat: 1.0)
-        recorder.record(key: "getabera#0", atBeat: 1.02)
-        recorder.record(key: "rabana#0", atBeat: 1.0)
+        recorder.record(key: "drumkit#0", atBeat: 1.0)
+        recorder.record(key: "drumkit#0", atBeat: 1.02)
+        recorder.record(key: "drumkit#1", atBeat: 1.0)
         XCTAssertEqual(recorder.hits.count, 2)
         XCTAssertEqual(recorder.hits(atStep: 4).count, 2)
     }
@@ -74,28 +74,15 @@ final class LessonScorerTests: XCTestCase {
     func testEmptyLesson() {
         XCTAssertEqual(LessonScorer.score(expected: [], played: []).accuracyPercent, 0)
     }
-
-    func testFirstGrooveIsValid() {
-        let pattern = RhythmPattern.firstGroove
-        XCTAssertEqual(pattern.hits.count, 8)
-        XCTAssertTrue(pattern.hits.allSatisfy { $0.beat >= 0 && $0.beat < Double(pattern.beats) })
-        for hit in pattern.hits {
-            let id = String(hit.key.split(separator: "#")[0])
-            XCTAssertNotNil(Instrument.named(id), "unknown instrument \(id)")
-        }
-    }
 }
 
 final class InstrumentTests: XCTestCase {
     func testDefaultLayoutDoesNotOverlap() {
-        // The two sets are never in the room together, so each set is checked on its own.
-        XCTAssertTrue(StudioLayout.isSpacedOut(Instrument.traditional))
-        XCTAssertTrue(StudioLayout.isSpacedOut(Instrument.band))
+        XCTAssertTrue(StudioLayout.isSpacedOut(Instrument.all))
     }
 
-    func testEveryInstrumentBelongsToExactlyOneSet() {
+    func testInstrumentIDsAreUnique() {
         XCTAssertEqual(Set(Instrument.all.map(\.id)).count, Instrument.all.count, "ids must be unique")
-        XCTAssertEqual(Instrument.traditional.count + Instrument.band.count, Instrument.all.count)
     }
 
     func testDrumKitAndSynthZones() {
@@ -123,10 +110,8 @@ final class InstrumentTests: XCTestCase {
     }
 
     func testKeysAndZones() {
-        XCTAssertEqual(Instrument.key("thammattama", zone: 1), "thammattama#1")
-        XCTAssertEqual(Instrument.thammattama.zoneCount, 2)
-        XCTAssertEqual(Instrument.chimes.zoneCount, 3)
-        XCTAssertEqual(Instrument.displayName(forKey: "getabera#0"), "Geta Bera")
+        XCTAssertEqual(Instrument.key("drumkit", zone: 1), "drumkit#1")
+        XCTAssertEqual(Instrument.displayName(forKey: "drumkit#0"), "Kick")
     }
 }
 

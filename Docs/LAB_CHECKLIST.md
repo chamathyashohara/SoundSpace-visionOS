@@ -45,7 +45,7 @@ In Tuner, record the chip for 5 situations × 4 tries: singing "aah", humming, t
 5. If spatial audio is silent, tell me what you see in the Xcode console (sound load messages).
 
 ### 6. Evidence and demo recording (20 min)
-- Screenshots (Cmd+S in simulator saves a PNG): SwaraCoach — onboarding, library, sing screen, results, tuner, progress, dark mode, large text (Settings → Accessibility → Larger Text in simulator or Xcode Environment Overrides), iPad (iPad simulator). SoundSpace — control panel, studio with all 4 instruments, loop recorder, lesson result.
+- Screenshots (Cmd+S in simulator saves a PNG): SwaraCoach — onboarding, library, sing screen, results, tuner, progress, dark mode, large text (Settings → Accessibility → Larger Text in simulator or Xcode Environment Overrides), iPad (iPad simulator). SoundSpace — control panel, studio with the drum kit and chord synth, loop recorder, lesson result.
 - Screen recordings: QuickTime Player → File → New Screen Recording (or `xcrun simctl io booted recordVideo demo.mov`). Record: 1 min SwaraCoach on iPhone (screen recording from iPhone: Control Centre), 1 min SoundSpace in simulator.
 - Performance (2 min): run once with Instruments → Time Profiler on SwaraCoach while singing (Product → Profile); screenshot the call tree showing audio work off the main thread. Optionally Xcode's debug gauges (CPU/Memory) screenshot while singing.
 
