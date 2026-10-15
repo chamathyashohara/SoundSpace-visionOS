@@ -36,12 +36,7 @@ struct ControlPanelView: View {
         @Bindable var studio = studio
         return VStack(alignment: .leading, spacing: 12) {
             Text("Instruments").font(.headline)
-            Picker("Instrument set", selection: Binding(get: { studio.kit }, set: { studio.selectKit($0) })) {
-                ForEach(StudioModel.Kit.allCases, id: \.self) { Text($0.rawValue).tag($0) }
-            }
-            .pickerStyle(.segmented)
-            .accessibilityIdentifier("kitPicker")
-            ForEach(studio.kit.instruments) { instrument in
+            ForEach(Instrument.all) { instrument in
                 Toggle(isOn: Binding(get: { studio.enabled[instrument.id] ?? true },
                                      set: { studio.enabled[instrument.id] = $0 })) {
                     VStack(alignment: .leading) {

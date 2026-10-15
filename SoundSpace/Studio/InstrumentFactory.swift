@@ -170,24 +170,6 @@ enum InstrumentFactory {
         root.components.set(InstrumentComponent(instrumentID: instrument.id, zone: -1))
 
         switch instrument.id {
-        case "getabera":
-            // Tall barrel drum
-            root.addChild(zone(instrument, index: 0, mesh: .generateCylinder(height: 0.7, radius: 0.15),
-                               color: UIColor(red: 0.55, green: 0.12, blue: 0.1, alpha: 1), position: [0, 0, 0]))
-            root.addChild(label(instrument.name, height: 0.5))
-        case "thammattama":
-            // Two short drums side by side: high and low
-            root.addChild(zone(instrument, index: 0, mesh: .generateCylinder(height: 0.3, radius: 0.13),
-                               color: UIColor(red: 0.45, green: 0.28, blue: 0.14, alpha: 1), position: [-0.17, 0, 0]))
-            root.addChild(zone(instrument, index: 1, mesh: .generateCylinder(height: 0.34, radius: 0.16),
-                               color: UIColor(red: 0.36, green: 0.22, blue: 0.11, alpha: 1), position: [0.17, 0, 0]))
-            root.addChild(label(instrument.name, height: 0.3))
-        case "rabana":
-            // Wide, flat frame drum tilted towards the player
-            root.addChild(zone(instrument, index: 0, mesh: .generateCylinder(height: 0.07, radius: 0.32),
-                               color: UIColor(red: 0.78, green: 0.62, blue: 0.4, alpha: 1), position: [0, 0, 0],
-                               orientation: simd_quatf(angle: .pi / 3, axis: [1, 0, 0])))
-            root.addChild(label(instrument.name, height: 0.42))
         case "drumkit":
             addDrumKit(to: root, instrument: instrument)
         case "chordpads":
@@ -205,14 +187,7 @@ enum InstrumentFactory {
             }
             root.addChild(label(instrument.name, height: 0.3))
         default:
-            // Chimes: three golden bells of different heights
-            let heights: [Float] = [0.1, 0.0, -0.1]
-            for index in 0..<instrument.zoneCount {
-                root.addChild(zone(instrument, index: index, mesh: .generateSphere(radius: 0.065 + 0.01 * Float(index)),
-                                   color: UIColor(red: 0.95, green: 0.75, blue: 0.2, alpha: 1), metallic: true,
-                                   position: [Float(index - 1) * 0.17, heights[index], 0]))
-            }
-            root.addChild(label(instrument.name, height: 0.22))
+            break
         }
         return root
     }
