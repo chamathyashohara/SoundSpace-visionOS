@@ -27,9 +27,9 @@ struct Instrument: Identifiable, Hashable {
     static let chimes = Instrument(id: "chimes", name: "Chimes", subtitle: "Melodic bells",
                                    soundFiles: ["chime_1", "chime_2", "chime_3"], home: [0.0, 1.45, -1.2])
 
-    /// The drum kit: kick, snare, hi-hat, tom and crash cymbal in one group.
-    static let drumKit = Instrument(id: "drumkit", name: "Drum Kit", subtitle: "Kick, snare, hi-hat, tom and crash",
-                                    soundFiles: ["kick", "snare", "hihat", "tom", "crash"], home: [0.0, 0.85, -0.9])
+    /// The drum kit: kick, snare, hi-hat, rack tom, crash, floor tom and ride in one group.
+    static let drumKit = Instrument(id: "drumkit", name: "Drum Kit", subtitle: "Kick, snare, hi-hat, toms, crash and ride",
+                                    soundFiles: ["kick", "snare", "hihat", "tom", "crash", "floortom", "ride"], home: [0.0, 0.85, -0.9])
     /// The chord synth: four pads, one per chord of the progression.
     static let chordSynth = Instrument(id: "chordpads", name: "Chord Synth", subtitle: "Four pads play your chord progression",
                                        soundFiles: ["", "", "", ""], home: [0.0, 1.5, -1.15], chordPads: true)
@@ -39,7 +39,7 @@ struct Instrument: Identifiable, Hashable {
     static let all: [Instrument] = traditional + band
 
     /// Names for the drum kit zones, in zone order.
-    static let drumKitZoneNames = ["Kick", "Snare", "Hi-hat", "Tom", "Crash"]
+    static let drumKitZoneNames = ["Kick", "Snare", "Hi-hat", "Tom", "Crash", "Floor tom", "Ride"]
 
     static func named(_ id: String) -> Instrument? { all.first { $0.id == id } }
 
