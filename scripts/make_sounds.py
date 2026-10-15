@@ -3,7 +3,7 @@
 
 Each drum is a sine wave whose pitch falls quickly (the 'thump' of a struck membrane) plus a short burst of
 noise (the stick attack). Chimes are sums of inharmonic partials with a long decay (metal bars / bells).
-The drum kit is built the same way (kick, snare, hi-hat, tom, crash) and the chord pads are three-note pads
+The drum kit is built the same way (kick, snare, hi-hat, rack tom, crash, floor tom, ride) and the chord pads are three-note pads
 with a few harmonics per note, so every chord of the synth is a small pre-rendered file.
 Run:  python3 scripts/make_sounds.py   (needs numpy)
 """
@@ -76,6 +76,13 @@ def crash():
     return (noise + shimmer) * np.exp(-t * 2.6) * np.minimum(1, t / 0.004)
 
 
+def ride():
+    """A ride cymbal: a bright 'ping' of inharmonic partials plus a long wash of noise."""
+    noise, t = bright_noise(1.4)
+    ping = sum(np.sin(2 * np.pi * f * t) * a for f, a in ((1180, 1.0), (1630, 0.6), (2490, 0.5), (3720, 0.35)))
+    return (ping * np.exp(-t * 4.0) + noise * 0.35 * np.exp(-t * 2.2)) * np.minimum(1, t / 0.002)
+
+
 # ---- Chord pads (the synth) -------------------------------------------------------------------------------
 
 CHORD_SR = 22050            # chords have no content above a few kHz, so half the sample rate is plenty
@@ -124,6 +131,8 @@ def make_all():
     save("hihat", hihat(), peak=0.6)
     save("tom", drum(210, 105, 0.55, 7.0, 0.2, 0.012))
     save("crash", crash(), peak=0.7)
+    save("floortom", drum(150, 72, 0.7, 6.0, 0.18, 0.012))
+    save("ride", ride(), peak=0.6)
     # Chords: 12 roots x major / minor
     for pc in range(12):
         for quality in ("maj", "min"):

@@ -99,11 +99,13 @@ final class InstrumentTests: XCTestCase {
     }
 
     func testDrumKitAndSynthZones() {
-        XCTAssertEqual(Instrument.drumKit.zoneCount, 5)
+        XCTAssertEqual(Instrument.drumKit.zoneCount, 7)
         XCTAssertEqual(Instrument.drumKitZoneNames.count, Instrument.drumKit.zoneCount)
         XCTAssertEqual(Instrument.chordSynth.zoneCount, ChordProgression.slotCount)
         XCTAssertTrue(Instrument.chordSynth.chordPads)
         XCTAssertEqual(Instrument.displayName(forKey: "drumkit#1"), "Snare")
+        XCTAssertEqual(Instrument.displayName(forKey: "drumkit#5"), "Floor tom")
+        XCTAssertEqual(Instrument.displayName(forKey: "drumkit#6"), "Ride")
         XCTAssertEqual(Instrument.displayName(forKey: "chordpads#2"), "Chord Synth")
     }
 

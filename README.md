@@ -1,6 +1,6 @@
 # SoundSpace
 
-**Play a drum kit and a chord synth all around you.** A visionOS prototype for Apple Vision Pro: a life-size virtual drum kit and four chord pads float in your room. Pick a chord progression, let the synth play it, and play the drums on top; record the loop and hear it back. The original Sri Lankan percussion (geta bera, thammattama, rabana, chimes) is a second instrument set you can switch to. Each instrument sounds from where it sits.
+**Play a drum kit and a chord synth all around you.** A visionOS prototype for Apple Vision Pro: a life-size virtual drum kit (kick, snare, hi-hat, two toms, crash and ride on stands) and four chord pads float in your room. Pick a chord progression, let the synth play it, and play the drums on top; record the loop and hear it back. The original Sri Lankan percussion (geta bera, thammattama, rabana, chimes) is a second instrument set you can switch to. Each instrument sounds from where it sits.
 
 SE4041 Mobile Application Design & Development — Assignment 02, Part B.
 
